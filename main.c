@@ -121,7 +121,7 @@ void helpCommand()
     if (fptr == NULL)
     {
         printf("CLIHelp.txt missing!\n");
-        exit(0);
+        exit(1);
     }
 
     c = getc(fptr);
