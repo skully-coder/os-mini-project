@@ -17,10 +17,10 @@ void main()
     //get current working directory
     char cwd[1024];
     char hostname[1024];
-    getcwd(cwd, sizeof(cwd));
     do
     {
         // print current user in yellow
+        getcwd(cwd, sizeof(cwd));
         printf("\033[1;33m");
         gethostname(hostname, sizeof(hostname));
         printf("%s@%s:", getlogin(), hostname);
@@ -54,9 +54,47 @@ void main()
         {
             system("clear");
         }
+        else if(strcmp(command, "exit") == 0)
+        {
+            exit(0);
+        }
+        // implement change directory command
+        else if (strncmp(command, "cd", 2) == 0)
+        {
+            // implement cd command
+            // split command into tokens
+            char *token = strtok(command, " ");
+            token = strtok(NULL, " ");
+            if (token == NULL)
+            {
+                printf("No directory specified\n");
+            }
+            else
+            {
+                // check if directory exists
+                struct stat st;
+                if (stat(token, &st) == 0)
+                {
+                    if (S_ISDIR(st.st_mode))
+                    {
+                        chdir(token);
+                    }
+                    else
+                    {
+                        printf("%s is not a directory\n", token);
+                    }
+                }
+                else
+                {
+                    printf("%s does not exist\n", token);
+                }
+            }
+        }
         else
         {
-            printf("Wrong Command entered!\n");
+            printf("\033[1;31m");
+            printf("Invalid command, enter \"help\" for all available commands \n");
+            printf("\033[0m");
         }
 
     } while (strcmp(command, "cliquit") != 0 || strcmp(command, "quit") != 0 || strcmp(command, "exit") != 0);
