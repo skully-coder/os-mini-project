@@ -12,16 +12,23 @@ void helpCommand();
 void main()
 {
     char command[128];
-    printf("Command line interface started, enter \"help\" for all available commands \n");
+    printf("\nCommand line interface started, enter \"help\" for all available commands \n");
 
     //get current working directory
     char cwd[1024];
+    char hostname[1024];
     getcwd(cwd, sizeof(cwd));
     do
     {
-        // print current working directory in red color
+        // print current user in yellow
+        printf("\033[1;33m");
+        gethostname(hostname, sizeof(hostname));
+        printf("%s@%s:", getlogin(), hostname);
+        printf("\033[0m");
         printf("\033[0;31m");
+        printf("\x1b[1m"); 
         printf("%s> ", cwd);
+        printf("\x1b[0m");
         printf("\033[0m");
 
         // read command from user
@@ -43,12 +50,16 @@ void main()
         {
             // Do nothing, while loop will automatically exit(only for correctness of command)
         }
+        else if(strcmp(command, "cls") == 0)
+        {
+            system("clear");
+        }
         else
         {
             printf("Wrong Command entered!\n");
         }
 
-    } while (strcmp(command, "cliquit") != 0);
+    } while (strcmp(command, "cliquit") != 0 || strcmp(command, "quit") != 0 || strcmp(command, "exit") != 0);
 }
 
 void listCommand()
@@ -68,6 +79,18 @@ void listCommand()
         printf("%s\t\t\t", entry->d_name);
         printf("\n");
     }
+    printf("\n");
+}
+
+// function to print the documentation of a given command
+void helpCommand()
+{
+    printf("\n");
+    printf("list\n\tLists all files in the current directory\n\n");
+    printf("list -priv\n\tLists all files in the current directory and all subdirectories\n\n");
+    printf("help\n\tPrints the documentation of all available commands\n\n");
+    printf("cls\n\tClears the screen\n\n");
+    printf("cliquit\n\tExits the command line interface\n\n");
     printf("\n");
 }
 
@@ -111,25 +134,4 @@ void listPrivCommand(char *dir, int depth)
     }
     chdir("..");
     closedir(dp);
-}
-
-void helpCommand()
-{
-    FILE *fptr;
-    char c;
-    fptr = fopen("CLIHelp.txt", "r"); // Open CLIHelp.txt for reading
-    if (fptr == NULL)
-    {
-        printf("CLIHelp.txt missing!\n");
-        exit(1);
-    }
-
-    c = getc(fptr);
-    while (c != EOF)
-    {
-        printf("%c", c);
-        c = getc(fptr);
-    }
-    printf("\n");
-    fclose(fptr);
 }
