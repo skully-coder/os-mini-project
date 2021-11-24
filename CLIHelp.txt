@@ -1,5 +1,11 @@
-Help Menu:
 
-list       : Lists all directories and files in the current directory
-list -priv : Lists all directories and files in the current directory and the privilages assigned to them
-cliquit    : Quits the command line interface
+OS-Mini-Shell (Help Menu):
+
+list
+cd
+cls
+
+cliquit
+exit
+quit
+

@@ -42,7 +42,7 @@ void main()
         {
             listPrivCommand(".", 0);
         }
-        else if (strcmp(command, "help") == 0)
+        else if (strcmp(command, "help") == 0 || strcmp(command, "info") == 0)
         {
             helpCommand();
         }
@@ -54,14 +54,13 @@ void main()
         {
             system("clear");
         }
-        else if(strcmp(command, "exit") == 0)
+        else if(strcmp(command, "exit") == 0 || strcmp(command, "quit") == 0)
         {
             exit(0);
         }
         // implement change directory command
-        else if (strncmp(command, "cd", 2) == 0)
+        else if (strncmp(command, "cd", 2) == 0 && command[2] == ' ')
         {
-            // implement cd command
             // split command into tokens
             char *token = strtok(command, " ");
             token = strtok(NULL, " ");
@@ -115,21 +114,27 @@ void listCommand()
     {
         lstat(entry->d_name, &statbuf);
         printf("%s\t\t\t", entry->d_name);
-        printf("\n");
+        printf("\n"); 
     }
     printf("\n");
 }
 
-// function to print the documentation of a given command
+// function to print the documentation for the project by reading CLIHelp.txt
 void helpCommand()
 {
-    printf("\n");
-    printf("list\n\tLists all files in the current directory\n\n");
-    printf("list -priv\n\tLists all files in the current directory and all subdirectories\n\n");
-    printf("help\n\tPrints the documentation of all available commands\n\n");
-    printf("cls\n\tClears the screen\n\n");
-    printf("cliquit\n\tExits the command line interface\n\n");
-    printf("\n");
+    FILE *fp;
+    char line[128];
+    fp = fopen("CLIHelp.txt", "r");
+    if (fp == NULL)
+    {
+        printf("Error opening file\n");
+        exit(1);
+    }
+    while (fgets(line, sizeof(line), fp))
+    {
+        printf("%s", line);
+    }
+    fclose(fp);
 }
 
 void listPrivCommand(char *dir, int depth)
@@ -170,6 +175,5 @@ void listPrivCommand(char *dir, int depth)
             printf("\n");
         }
     }
-    chdir("..");
     closedir(dp);
 }
