@@ -74,7 +74,7 @@ void main()
 void invalidCommand()
 {
     printf("\033[1;31m");
-    printf("Invalid command, enter \"help\" for all available commands \n");
+    printf("Invalid command, enter \"help\" for all available commands \n\a");
     printf("\033[0m");
 }
 
