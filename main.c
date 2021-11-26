@@ -19,19 +19,19 @@ void main()
     printf("Command line interface started! Enter \"help\" for all available commands");
     printf("\033[0m");
     printf("\n\n");
-    //get current working directory
+    // get current working directory
     char cwd[1024];
     char hostname[1024];
+    gethostname(hostname, sizeof(hostname));
     do
     {
         // print current user in yellow
         getcwd(cwd, sizeof(cwd));
         printf("\033[1m");
-        gethostname(hostname, sizeof(hostname));
         printf("%s@%s:", getlogin(), hostname);
         printf("\033[0m");
         printf("\033[0;34;1m");
-        printf("\x1b[1m"); 
+        printf("\x1b[1m");
         printf("%s> ", cwd);
         printf("\x1b[0m");
         printf("\033[0m");
@@ -49,7 +49,7 @@ void main()
         {
             // Do nothing, while loop will automatically exit(only for correctness of command)
         }
-        else if(strcmp(command, "cls") == 0)
+        else if (strcmp(command, "cls") == 0)
         {
             system("clear");
         }
@@ -58,9 +58,8 @@ void main()
         {
             cdCommand();
         }
-        else if(strcmp(command, "") == 0)
+        else if (strcmp(command, "") == 0)
         {
-
         }
         else
         {
@@ -117,15 +116,15 @@ void cdCommand()
 void listCommand()
 {
     int priv = 0, inode = 0;
-    if(strlen(command)>6 || strlen(command) ==4)
+    if (strlen(command) > 6 || strlen(command) == 4)
     {
-        for(int i=6;i<strlen(command); i++)
+        for (int i = 6; i < strlen(command); i++)
         {
-            if(command[i]=='p')
+            if (command[i] == 'p')
             {
                 priv = 1;
             }
-            else if(command[i]=='n')
+            else if (command[i] == 'n')
             {
                 inode = 1;
             }
@@ -153,13 +152,13 @@ void listCommand()
     chdir(".");
     while ((entry = readdir(dp)) != NULL)
     {
-        if(strcmp(entry->d_name,".")==0||strcmp(entry->d_name,"..")==0)
+        if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
             continue;
         lstat(entry->d_name, &statbuf);
         printf("%-16s\t", entry->d_name);
-        if(priv)
+        if (priv)
         {
-            printf((S_ISDIR(statbuf.st_mode)) ? "d" : "-");
+            printf((S_ISDIR(statbuf.st_mode)) ? "d" : S_ISFIFO(statbuf.st_mode) ? "p" : "-");
             printf((statbuf.st_mode & S_IRUSR) ? "r" : "-");
             printf((statbuf.st_mode & S_IWUSR) ? "w" : "-");
             printf((statbuf.st_mode & S_IXUSR) ? "x" : "-");
@@ -170,11 +169,11 @@ void listCommand()
             printf((statbuf.st_mode & S_IWOTH) ? "w" : "-");
             printf((statbuf.st_mode & S_IXOTH) ? "x\t" : "-\t");
         }
-        if(inode)
+        if (inode)
         {
             printf("%ld\t", entry->d_ino);
         }
-        printf("\n");  
+        printf("\n");
     }
     closedir(dp);
 }

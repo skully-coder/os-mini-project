@@ -14,7 +14,7 @@ A command line interface lets user interact with computer by typing in commands.
 
 We would be taking inference from the following topics: 
 - File system management 
-- Intercross’s Communication 
+- Inter Process Communication 
 - Working with regular files and directory structures  
 
 ## Learning Outcomes: 
@@ -23,6 +23,9 @@ By implementing the given project, we will be able to grasp knowledge about vari
 
 This will overall help us to get a deeper and proper understanding of the operating system. 
 
+## Execution:
+Change to the current directory and run the shell script `./run.sh`. This will compile the project and excecute it.
+<br>
 # Name of team members: 
 
 1)	Aarush Saxena-190905135 
