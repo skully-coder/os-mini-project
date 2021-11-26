@@ -1,9 +1,10 @@
-
 OS-Mini-Shell (Help Menu):
 
-list
-list -priv
-cd
-cls
+list : List all the directories and files in the current working directory  
+         -p : Show Privilages 
+         -n : Show Inode no.
 
-cliquit
+cd "dir" : Change directory to the directory given in "".
+cls : Clears the console
+
+cliquit : Quits the command line interface
