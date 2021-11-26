@@ -1,4 +1,4 @@
-OS-Mini-Shell (Help Menu):
+Command_Line_Interface (Help Menu):
 
 list :      List all the directories and files in the current working directory  
                 -p : Show Privilages of the file or directory
@@ -6,8 +6,8 @@ list :      List all the directories and files in the current working directory
                 -t : Show Time and date modified of the file or directory
                 -a : List all data of the file or directory
 
-cd <dir> :  Change directory to the directory given in <>.
+chdir <dir> :  Change directory to the directory given in <>.
 
-cls :       Clears the console
+clr :       Clears the console
 
 cliquit :   Quits the command line interface
