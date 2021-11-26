@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -19,19 +20,19 @@ void main()
     printf("Command line interface started! Enter \"help\" for all available commands");
     printf("\033[0m");
     printf("\n\n");
-    // get current working directory
+    //get current working directory
     char cwd[1024];
     char hostname[1024];
-    gethostname(hostname, sizeof(hostname));
     do
     {
         // print current user in yellow
         getcwd(cwd, sizeof(cwd));
         printf("\033[1m");
+        gethostname(hostname, sizeof(hostname));
         printf("%s@%s:", getlogin(), hostname);
         printf("\033[0m");
         printf("\033[0;34;1m");
-        printf("\x1b[1m");
+        printf("\x1b[1m"); 
         printf("%s> ", cwd);
         printf("\x1b[0m");
         printf("\033[0m");
@@ -47,9 +48,9 @@ void main()
         }
         else if (strcmp(command, "cliquit") == 0)
         {
-            // Do nothing, while loop will automatically exit(only for correctness of command)
+            system("clear");
         }
-        else if (strcmp(command, "cls") == 0)
+        else if(strcmp(command, "cls") == 0)
         {
             system("clear");
         }
@@ -58,8 +59,9 @@ void main()
         {
             cdCommand();
         }
-        else if (strcmp(command, "") == 0)
+        else if(strcmp(command, "") == 0)
         {
+
         }
         else
         {
@@ -115,17 +117,27 @@ void cdCommand()
 
 void listCommand()
 {
-    int priv = 0, inode = 0;
-    if (strlen(command) > 6 || strlen(command) == 4)
+    int priv = 0, inode = 0, time = 0;
+    if(strlen(command)>6 || strlen(command) ==4)
     {
-        for (int i = 6; i < strlen(command); i++)
+        for(int i=6;i<strlen(command); i++)
         {
-            if (command[i] == 'p')
+            if(command[i]=='p')
             {
                 priv = 1;
             }
-            else if (command[i] == 'n')
+            else if(command[i]=='n')
             {
+                inode = 1;
+            }
+            else if(command[i]=='t')
+            {
+                time = 1;
+            }
+            else if(command[i]=='a')
+            {
+                priv = 1;
+                time = 1;
                 inode = 1;
             }
             else
@@ -152,13 +164,13 @@ void listCommand()
     chdir(".");
     while ((entry = readdir(dp)) != NULL)
     {
-        if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
+        if(strcmp(entry->d_name,".")==0||strcmp(entry->d_name,"..")==0)
             continue;
         lstat(entry->d_name, &statbuf);
-        printf("%-16s\t", entry->d_name);
-        if (priv)
+        printf("%-12s\t", entry->d_name);
+        if(priv)
         {
-            printf((S_ISDIR(statbuf.st_mode)) ? "d" : S_ISFIFO(statbuf.st_mode) ? "p" : "-");
+            printf((S_ISDIR(statbuf.st_mode)) ? "d" : "-");
             printf((statbuf.st_mode & S_IRUSR) ? "r" : "-");
             printf((statbuf.st_mode & S_IWUSR) ? "w" : "-");
             printf((statbuf.st_mode & S_IXUSR) ? "x" : "-");
@@ -169,11 +181,18 @@ void listCommand()
             printf((statbuf.st_mode & S_IWOTH) ? "w" : "-");
             printf((statbuf.st_mode & S_IXOTH) ? "x\t" : "-\t");
         }
-        if (inode)
+        if(inode)
         {
-            printf("%ld\t", entry->d_ino);
+            printf("%ld\t\t", entry->d_ino);
         }
-        printf("\n");
+        if(time)
+        {
+            struct stat attr;
+            stat(entry->d_name, &attr);
+            printf("%s", ctime(&(attr.st_mtime)));
+        }
+        if(!time)
+            printf("\n");  
     }
     closedir(dp);
 }
