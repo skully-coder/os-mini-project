@@ -10,6 +10,7 @@
 char command[128];
 
 void invalidCommand();
+void printerror(char* errmsg);
 void cdCommand();
 void listCommand();
 void helpCommand();
@@ -55,7 +56,7 @@ void main()
             system("clear");
         }
         // implement change directory command
-        else if (strncmp(command, "cd", 2) == 0 && command[2] == ' ')
+        else if (strncmp(command, "chdir", 5) == 0 && command[5] == ' ')
         {
             cdCommand();
         }
@@ -73,8 +74,13 @@ void main()
 
 void invalidCommand()
 {
+    printerror("Invalid command, enter \"help\" for all available commands \n");
+}
+
+void printerror(char* errmsg)
+{
     printf("\033[1;31m");
-    printf("Invalid command, enter \"help\" for all available commands \n\a");
+    printf("%s\a",errmsg);
     printf("\033[0m");
 }
 
@@ -85,9 +91,7 @@ void cdCommand()
     token = strtok(NULL, " ");
     if (token == NULL)
     {
-        printf("\033[1;31m");
-        printf("No directory specified\n");
-        printf("\033[0m");
+        printerror("No directory specified\n");
     }
     else
     {
@@ -102,15 +106,17 @@ void cdCommand()
             else
             {
                 printf("\033[1;31m");
-                printf("%s is not a directory\n", token);
+                printf("%s",token);
                 printf("\033[0m");
+                printerror(" is not a directory\n");
             }
         }
         else
         {
             printf("\033[1;31m");
-            printf("%s does not exist\n", token);
+            printf("%s",token);
             printf("\033[0m");
+            printerror(" does not exist\n");
         }
     }
 }
@@ -158,8 +164,8 @@ void listCommand()
     struct stat statbuf;
     if (!(dp = opendir(".")))
     {
-        printf("Can't open directory \n");
-        exit(1);
+        printerror("Can't open directory \n");
+        return;
     }
     chdir(".");
     while ((entry = readdir(dp)) != NULL)
@@ -200,15 +206,15 @@ void listCommand()
 // function to print the documentation for the project by reading CLIHelp.txt
 void helpCommand()
 {
-    system("clear");
     FILE *fp;
     char line[128];
     fp = fopen("CLIHelp.txt", "r");
     if (fp == NULL)
     {
-        printf("Error opening file\n");
-        exit(1);
+        printerror("Error opening file\n");
+        return;
     }
+    system("clear");
     while (fgets(line, sizeof(line), fp))
     {
         printf("%s", line);
