@@ -2,10 +2,8 @@
 OS-Mini-Shell (Help Menu):
 
 list
+list -priv
 cd
 cls
 
 cliquit
-exit
-quit
-
