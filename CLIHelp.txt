@@ -1,8 +1,10 @@
 OS-Mini-Shell (Help Menu):
 
 list :      List all the directories and files in the current working directory  
-                -p : Show Privilages 
-                -n : Show Inode no.
+                -p : Show Privilages of the file or directory
+                -n : Show Inode no. of the file or directory
+                -t : Show Time and date modified of the file or directory
+                -a : List all data of the file or directory
 
 cd <dir> :  Change directory to the directory given in <>.
 
