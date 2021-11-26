@@ -51,7 +51,7 @@ void main()
         {
             system("clear");
         }
-        else if(strcmp(command, "cls") == 0)
+        else if(strcmp(command, "clr") == 0)
         {
             system("clear");
         }
