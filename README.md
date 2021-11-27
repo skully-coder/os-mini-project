@@ -24,11 +24,15 @@ By implementing the given project, we will be able to grasp knowledge about vari
 This will overall help us to get a deeper and proper understanding of the operating system. 
 
 ## Execution:
-Change to the current directory and run the shell script `./run.sh`. This will compile the project and excecute it.
-<br>
-# Name of team members: 
+- Change to the current directory
+- Give the file `execute` permissions using `chmod +x run.sh`
+- Run the shell script `./run.sh`. This will compile the project and excecute it.
 
-1)	Aarush Saxena-190905135 
-1)	Abhinav Agrawal-190905190 
-1)	Prateek Rana-190905260 
-1)	Kartik Diwan-190905246 
+# Team Members: 
+
+| Name            	| Registration Number 	|
+|-----------------	|---------------------	|
+| Aarush Saxena   	| 190905135           	|
+| Abhinav Agrawal 	| 190905190           	|
+| Prateek Rana    	| 190905260           	|
+| Kartik Diwan    	| 190905246           	|
