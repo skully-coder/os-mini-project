@@ -6,7 +6,6 @@ A command line interface lets user interact with computer by typing in commands.
 
 - File System Operations 
 - Parent Process and child Process operations 
-- Creation of pipe 
 - Implementation of links 
 - A manual page, indicate the usage of included functions 
 
