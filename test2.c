@@ -214,6 +214,7 @@ void listCommand()
 }
 
 void makelink(){
+    //makelink might have some bugs so dont combine it with main.c
     int i=0,k=1,t=1;
     struct stat st;
     char file1[100],file2[100],n_command[1024];
