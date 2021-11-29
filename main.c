@@ -1,3 +1,13 @@
+/**
+ * @file main.c
+ * @author Abhinav Agarwal, Aarush Saxena, Kartik Diwan, Prateek Rana
+ * @brief A program to implement a simple shell with basic UNIX commands
+ * @version 0.1
+ * @date 2021-11-30
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -7,6 +17,10 @@
 #include <sys/types.h>
 #include <dirent.h>
 
+/**
+ * @brief global variable to store the command entered by the user
+ * 
+ */
 char command[1024];
 
 void invalidCommand();
@@ -18,10 +32,21 @@ void makelink();
 void removelink();
 void removeFile();
 void grepUtil();
+
+/**
+ * @brief main function to implement the shell
+ * 
+ */
 void main()
 {
     system("clear");
-    printf("\033[1m");
+    // printf("\033[1m");
+    // printf("Command line interface started! Enter \"help\" for all available commands");
+    // printf("\033[0m");
+    // printf("\n\n");
+
+    // print text in orange color
+    printf("\033[1;33m");
     printf("Command line interface started! Enter \"help\" for all available commands");
     printf("\033[0m");
     printf("\n\n");
@@ -90,11 +115,20 @@ void main()
     } while (strcmp(command, "cliquit") != 0);
 }
 
+/**
+ * @brief function to print invalid command message
+ * 
+ */
 void invalidCommand()
 {
     printerror("Invalid command, enter \"help\" for all available commands \n");
 }
 
+/**
+ * @brief function to print the error message
+ * 
+ * @param errmsg 
+ */
 void printerror(char *errmsg)
 {
     printf("\033[1;31m");
@@ -102,6 +136,10 @@ void printerror(char *errmsg)
     printf("\033[0m");
 }
 
+/**
+ * @brief function to implement the grep command
+ * 
+ */
 void grepUtil()
 {
     char *argv[1024];
@@ -148,6 +186,10 @@ void grepUtil()
     }
 }
 
+/**
+ * @brief function to implement the rm command
+ * 
+ */
 void removeFile()
 {
     char *fileName = strtok(command, " ");
@@ -169,6 +211,10 @@ void removeFile()
     }
 }
 
+/**
+ * @brief function to implement the cd command
+ * 
+ */
 void cdCommand()
 {
     // split command into tokens
@@ -206,6 +252,10 @@ void cdCommand()
     }
 }
 
+/**
+ * @brief function to implement the list command
+ * 
+ */
 void listCommand()
 {
     int priv = 0, inode = 0, time = 0;
@@ -314,6 +364,10 @@ void listCommand()
     closedir(dp);
 }
 
+/**
+ * @brief function to create file links
+ * 
+ */
 void makelink()
 {
     // makelink might have some bugs so dont combine it with main.c
@@ -436,6 +490,10 @@ void makelink()
     }
 }
 
+/**
+ * @brief function to unlink the file
+ * 
+ */
 void removelink()
 {
     int i = 0, k = 1, t = 1;
@@ -508,7 +566,10 @@ void removelink()
     }
 }
 
-// function to print the documentation for the project by reading CLIHelp.txt
+/**
+ * @brief function to print the help menu
+ * 
+ */
 void helpCommand()
 {
     FILE *fp;
