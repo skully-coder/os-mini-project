@@ -4,9 +4,9 @@
  * @brief A program to implement a simple shell with basic UNIX commands
  * @version 0.1
  * @date 2021-11-30
- * 
+ *
  * @copyright Copyright (c) 2021
- * 
+ *
  */
 #include <unistd.h>
 #include <stdlib.h>
@@ -16,10 +16,11 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <dirent.h>
+#include "p.h"
 
 /**
  * @brief global variable to store the command entered by the user
- * 
+ *
  */
 char command[1024];
 
@@ -35,7 +36,7 @@ void grepUtil();
 
 /**
  * @brief main function to implement the shell
- * 
+ *
  */
 void main()
 {
@@ -102,6 +103,25 @@ void main()
         {
             system("clear");
         }
+        else if (strcmp(command, "ps") == 0)
+        {
+            char current_dir[1024];
+            getcwd(current_dir, sizeof(current_dir));
+            mps *head, *link;
+
+            head = trav_dir("/proc/");
+            if (head == NULL)
+                printf("traverse dir error\n");
+            print_ps(head);
+
+            while (head != NULL) // Release the linked list
+            {
+                link = head;
+                head = head->next;
+                free(link);
+            }
+            chdir(current_dir);
+        }
         // implement change directory command
         else if (strncmp(command, "chdir", 5) == 0 && command[5] == ' ')
         {
@@ -117,7 +137,7 @@ void main()
 
 /**
  * @brief function to print invalid command message
- * 
+ *
  */
 void invalidCommand()
 {
@@ -126,8 +146,8 @@ void invalidCommand()
 
 /**
  * @brief function to print the error message
- * 
- * @param errmsg 
+ *
+ * @param errmsg
  */
 void printerror(char *errmsg)
 {
@@ -138,7 +158,7 @@ void printerror(char *errmsg)
 
 /**
  * @brief function to implement the grep command
- * 
+ *
  */
 void grepUtil()
 {
@@ -188,7 +208,7 @@ void grepUtil()
 
 /**
  * @brief function to implement the rm command
- * 
+ *
  */
 void removeFile()
 {
@@ -213,7 +233,7 @@ void removeFile()
 
 /**
  * @brief function to implement the cd command
- * 
+ *
  */
 void cdCommand()
 {
@@ -254,7 +274,7 @@ void cdCommand()
 
 /**
  * @brief function to implement the list command
- * 
+ *
  */
 void listCommand()
 {
@@ -366,7 +386,7 @@ void listCommand()
 
 /**
  * @brief function to create file links
- * 
+ *
  */
 void makelink()
 {
@@ -492,7 +512,7 @@ void makelink()
 
 /**
  * @brief function to unlink the file
- * 
+ *
  */
 void removelink()
 {
@@ -568,7 +588,7 @@ void removelink()
 
 /**
  * @brief function to print the help menu
- * 
+ *
  */
 void helpCommand()
 {
