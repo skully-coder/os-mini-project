@@ -1,13 +1,29 @@
 Command_Line_Interface (Help Menu):
 
-list :      List all the directories and files in the current working directory  
-                -p : Show Privilages of the file or directory
-                -n : Show Inode no. of the file or directory
-                -t : Show Time and date modified of the file or directory
-                -a : List all data of the file or directory
+list :          List all the directories and files in the current working directory  
+                    -p : Show Privilages of the file or directory
+                    -n : Show Inode no. of the file or directory
+                    -t : Show Time and date modified of the file or directory
+                    -a : List all data of the file or directory
 
-chdir <dir> :  Change directory to the directory given in <>.
+help/info :     Display the help menu
 
-clr :       Clears the console
+link [-s] <path_to_file> <path_to_link> :     
+                Creates a hard link to the file or directory, if -s is used, it creates a symbolic link
 
-cliquit :   Quits the command line interface
+unlink <path_to_link> :
+                Removes the link to the file or directory
+
+rem <path_to_file> : 
+                Removes the file 
+
+grep <pattern> <path_to_file> : 
+                Searches for the pattern in the file
+
+ps :            Display the process list
+
+chdir <dir> :   Change directory to the directory given in <>.
+
+clr :           Clears the console
+
+cliquit/quit :  Quits the command line interface

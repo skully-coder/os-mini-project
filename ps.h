@@ -24,24 +24,6 @@ typedef struct ps_info
 	struct ps_info *next;
 } mps;
 
-// int main (int ac, char * av [])
-// {
-// 	mps * head, * link;
-
-// 	head = trav_dir ("/proc/");
-// 	if (head == NULL)
-// 		printf ("traverse dir error\n");
-// 	print_ps (head);
-
-// 	while (head != NULL)//Release the linked list
-// 	{
-// 		link = head;
-// 		head = head-> next;
-// 		free (link);
-// 	}
-// 	return 0;
-// }
-
 mps *trav_dir(char dir[])
 {
 	DIR *dir_ptr;

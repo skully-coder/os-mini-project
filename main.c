@@ -16,7 +16,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <dirent.h>
-#include "p.h"
+#include "ps.h"
 
 /**
  * @brief global variable to store the command entered by the user
@@ -41,10 +41,6 @@ void grepUtil();
 void main()
 {
     system("clear");
-    // printf("\033[1m");
-    // printf("Command line interface started! Enter \"help\" for all available commands");
-    // printf("\033[0m");
-    // printf("\n\n");
 
     // print text in orange color
     printf("\033[1;33m");
@@ -67,13 +63,14 @@ void main()
         printf("%s> ", cwd);
         printf("\x1b[0m");
         printf("\033[0m");
+
         // read command from user
         gets(command);
         if (strcmp(command, "list") == 0 || strncmp(command, "list -", 6) == 0)
         {
             listCommand();
         }
-        else if (strcmp(command, "help") == 0)
+        else if (strcmp(command, "help") == 0 || strcmp(command, "info") == 0)
         {
             helpCommand();
         }
@@ -82,12 +79,12 @@ void main()
             makelink();
         }
         // implement basic rm command
-        else if (strncmp(command, "rm", 2) == 0 || strncmp(command, "rm -", 4) == 0)
+        else if (strncmp(command, "rem", 2) == 0 || strncmp(command, "rem -", 4) == 0)
         {
             removeFile();
         }
         // implement grep function
-        else if (strncmp(command, "grep", 4) == 0 || strncmp(command, "grep -", 6) == 0)
+        else if (strncmp(command, "grep", 4) == 0)
         {
             grepUtil();
         }
@@ -95,9 +92,10 @@ void main()
         {
             removelink();
         }
-        else if (strcmp(command, "cliquit") == 0)
+        else if (strcmp(command, "cliquit") == 0 || strcmp(command, "quit") == 0)
         {
             system("clear");
+            exit(0);
         }
         else if (strcmp(command, "clr") == 0)
         {
@@ -132,7 +130,7 @@ void main()
             invalidCommand();
         }
 
-    } while (strcmp(command, "cliquit") != 0);
+    } while (strcmp(command, "cliquit") != 0 || strcmp(command, "quit") != 0);
 }
 
 /**
