@@ -33,6 +33,7 @@ void makelink();
 void removelink();
 void removeFile();
 void grepUtil();
+void catCommand();
 
 /**
  * @brief main function to implement the shell
@@ -69,6 +70,11 @@ void main()
         if (strcmp(command, "list") == 0 || strncmp(command, "list -", 6) == 0)
         {
             listCommand();
+        }
+        // implement cat command
+        else if (strncmp(command, "cat", 3) == 0 || strncmp(command, "cat -", 5) == 0)
+        {
+            catCommand();
         }
         else if (strcmp(command, "help") == 0 || strcmp(command, "info") == 0)
         {
@@ -152,6 +158,42 @@ void printerror(char *errmsg)
     printf("\033[1;31m");
     printf("%s\a", errmsg);
     printf("\033[0m");
+}
+
+void catCommand()
+{
+    // implement cat command
+    char *argv[1024];
+    char *token;
+    int i = 0;
+    token = strtok(command, " ");
+    while (token != NULL)
+    {
+        argv[i] = token;
+        token = strtok(NULL, " ");
+        i++;
+    }
+    argv[i] = NULL;
+    if (argv[1] == NULL)
+    {
+        printerror("cat: missing operand\n");
+        return;
+    }
+    // open the file
+    FILE *fp;
+    fp = fopen(argv[1], "r");
+    if (fp == NULL)
+    {
+        printerror("cat: cannot open file\n");
+        return;
+    }
+    // print the file
+    char ch;
+    while ((ch = fgetc(fp)) != EOF)
+    {
+        printf("%c", ch);
+    }
+    fclose(fp);
 }
 
 /**
